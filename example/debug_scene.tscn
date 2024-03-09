@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://c0l4bs6wrgkpc"]
+[gd_scene load_steps=3 format=3 uid="uid://c0l4bs6wrgkpc"]
 
 [ext_resource type="Script" path="res://addons/draggablesprite2d/src/draggablesprite2d.gd" id="1_sop0s"]
+[ext_resource type="Texture2D" uid="uid://b8ghfqyuph10g" path="res://icon.svg" id="3_2q26k"]
 
 [node name="DebugScene" type="Node2D"]
 
 [node name="DraggableSprite2D" type="Area2D" parent="."]
+texture_filter = 3
 script = ExtResource("1_sop0s")
+texture = ExtResource("3_2q26k")
