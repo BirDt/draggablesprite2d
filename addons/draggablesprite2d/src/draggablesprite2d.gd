@@ -66,6 +66,7 @@ func _ready() -> void:
 	# Hide the default_collider if there is a custom collider
 	if has_custom_collider():
 		default_collider.visible = false
+		default_collider.disabled = true
 	
 	# Set the starting origin if necessary
 	if return_to_origin:
@@ -114,8 +115,10 @@ func _on_input_event(viewport, event, shape_idx) -> void:
 func _on_child_entered_tree(child) -> void:
 	if child is CollisionShape2D and child != default_collider:
 		default_collider.visible = false
+		default_collider.disabled = true
 
 
 func _on_child_exiting_tree(child) -> void:
 	if child is CollisionShape2D and child != default_collider:
 		default_collider.visible = true
+		default_collider.disabled = false
