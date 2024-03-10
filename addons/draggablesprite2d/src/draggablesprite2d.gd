@@ -55,7 +55,6 @@ func _ready() -> void:
 
 	add_child(sprite)
 
-	# Create the default collider
 	default_collider = CollisionShape2D.new()
 	default_collider.shape = RectangleShape2D.new()
 
@@ -63,8 +62,7 @@ func _ready() -> void:
 	
 	add_child(default_collider)
 	if has_custom_collider():
-		default_collider.visible = false
-		default_collider.disabled = true
+		toggle_default_collider(false)
 	
 	# Set the starting origin if necessary
 	if return_to_origin:
@@ -86,12 +84,18 @@ func _process(delta) -> void:
 ## Returns true if the sprite has a custom collider
 func has_custom_collider() -> bool:
 	var children = get_children()
+	children.erase(default_collider)
 	for child in children:
 		if child is CollisionShape2D or child is CollisionPolygon2D:
-			if child != default_collider:
-				return true
+			return true
 	
 	return false
+
+
+## Shortcut to toggle on or off the default collider functionality
+func toggle_default_collider(on: bool) -> void:
+	default_collider.visible = on
+	default_collider.disabled = not on
 
 
 ## Updates the default collider to match the size of the sprite
@@ -110,14 +114,11 @@ func _on_input_event(viewport, event, shape_idx) -> void:
 		# Helps a bit to make the dragging less choppy
 		grabbed_offset = position - get_global_mouse_position()
 
-
 func _on_child_entered_tree(child) -> void:
 	if (child is CollisionShape2D or child is CollisionPolygon2D) and child != default_collider:
-		default_collider.visible = false
-		default_collider.disabled = true
+		toggle_default_collider(false)
 
 
 func _on_child_exiting_tree(child) -> void:
 	if (child is CollisionShape2D or child is CollisionPolygon2D) and child != default_collider:
-		default_collider.visible = true
-		default_collider.disabled = false
+		toggle_default_collider(true)
