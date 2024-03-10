@@ -9,6 +9,8 @@ signal grabbed
 signal released
 
 
+## Whether or not it should be possible to grab the sprite
+@export var grabbable := true
 ## The input button that will be used to grab the sprite
 @export var input_method: MouseButton = MOUSE_BUTTON_LEFT
 ## The texture that will be displayed by the sprite. [br]
@@ -21,8 +23,8 @@ signal released
 		update_default_collider()
 ## Whether or not the sprite should return to it's starting position when released
 @export var return_to_origin := false
-## Whether or not it should be possible to grab the sprite
-@export var grabbable := true
+## The position the sprite will return to when released
+@export var origin := Vector2.ZERO
 
 
 ## The Sprite node that will be used to display the texture
@@ -41,8 +43,6 @@ var is_grabbed := false :
 
 # Helps a bit to make the dragging less choppy
 var grabbed_offset := Vector2.ZERO
-# Store for the original position
-var origin := Vector2.ZERO
 # Mouse button pressed tracker, used to essentially replicate the behavior of 'is_action_just_released'
 var mb_pressed = false
 
