@@ -89,8 +89,9 @@ func _process(delta) -> void:
 func has_custom_collider() -> bool:
 	var children = get_children()
 	for child in children:
-		if child is CollisionShape2D and child != default_collider:
-			return true
+		if child is CollisionShape2D or child is CollisionPolygon2D:
+			if child != default_collider:
+				return true
 	
 	return false
 
@@ -113,12 +114,12 @@ func _on_input_event(viewport, event, shape_idx) -> void:
 
 
 func _on_child_entered_tree(child) -> void:
-	if child is CollisionShape2D and child != default_collider:
+	if (child is CollisionShape2D or child is CollisionPolygon2D) and child != default_collider:
 		default_collider.visible = false
 		default_collider.disabled = true
 
 
 func _on_child_exiting_tree(child) -> void:
-	if child is CollisionShape2D and child != default_collider:
+	if (child is CollisionShape2D or child is CollisionPolygon2D) and child != default_collider:
 		default_collider.visible = true
 		default_collider.disabled = false
