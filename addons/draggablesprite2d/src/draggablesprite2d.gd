@@ -53,7 +53,6 @@ func _ready() -> void:
 	child_exiting_tree.connect(_on_child_exiting_tree)
 	input_event.connect(_on_input_event)
 
-	# Add the sprite to the node
 	add_child(sprite)
 
 	# Create the default collider
@@ -63,7 +62,6 @@ func _ready() -> void:
 	update_default_collider()
 	
 	add_child(default_collider)
-	# Hide the default_collider if there is a custom collider
 	if has_custom_collider():
 		default_collider.visible = false
 		default_collider.disabled = true
@@ -74,7 +72,7 @@ func _ready() -> void:
 
 
 func _process(delta) -> void:
-	# If the left mouse button is down and the object is and can be grabbed, update it's position
+	# If the input_method is down and the object is and can be grabbed, update it's position
 	if Input.is_mouse_button_pressed(input_method) and is_grabbed and grabbable:
 		position = get_global_mouse_position() + grabbed_offset
 		mb_pressed = true
