@@ -11,6 +11,8 @@ signal released
 
 ## Whether or not it should be possible to grab the sprite
 @export var grabbable := true
+## Whether or not it should be possible to drag from the center of the sprite
+@export var centerDrag := false
 ## The input button that will be used to grab the sprite
 @export var input_method: MouseButton = MOUSE_BUTTON_LEFT
 ## The texture that will be displayed by the sprite. [br]
@@ -112,7 +114,8 @@ func _on_input_event(viewport, event, shape_idx) -> void:
 	if event is InputEventMouseButton and grabbable:
 		is_grabbed = event.is_pressed()
 		# Helps a bit to make the dragging less choppy
-		grabbed_offset = position - get_global_mouse_position()
+		if !centerDrag:
+			grabbed_offset = position - get_global_mouse_position()
 
 func _on_child_entered_tree(child) -> void:
 	if (child is CollisionShape2D or child is CollisionPolygon2D) and child != default_collider:
